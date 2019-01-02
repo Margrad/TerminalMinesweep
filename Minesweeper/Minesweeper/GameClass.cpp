@@ -52,10 +52,10 @@ void GameClass::MakeMap()
 			rows.push_back(i);
 			columns.push_back(j);
 		}
-		this->VisibleMap.push_back(row);
-		this->Map.push_back(row);
+		this->VisibleMap.push_back(row);// Set the visible map as empty(the player can't see anything before the game statrt)
+		this->Map.push_back(row);	// Set the map with all the information
 	}
-	for (int32 i = 0; i < this->NumberOfMines; i++) {
+	for (int32 i = 0; i < this->NumberOfMines; i++) {// Set the possition for the mines in the map 
 		int32 rand_val = rand() % MaxSize;
 		this->Map[rows[rand_val]][columns[rand_val]] = 'M';
 		rows.erase(rows.begin() + rand_val);
@@ -199,10 +199,11 @@ void GameClass::RunGame()
 	std::cout << "Insert D to dig and M to mark a position." << std::endl;
 	std::cout << "Insert the value of row and col you want to dig or Mark: " << std::endl;
 	while (1) {
-		while (opc != 'M' && opc != 'D' && opc != 'm' && opc != 'd' && opc != 'q' && opc != 'Q') {
+		do {
 			std::cout << "Option: ";
 			std::cin >> opc;
-		}
+		}while (opc != 'M' && opc != 'D' && opc != 'm' && opc != 'd' && opc != 'q' && opc != 'Q');
+
 		if (opc == 'q' || opc == 'Q') break;
 		while (row < 0 || row >= this->Wide) {
 			std::cout << "Row: ";
@@ -212,6 +213,8 @@ void GameClass::RunGame()
 			std::cout << "Column: ";
 			std::cin >> col;
 		}
+		FTEXT CIN_CLEANER; // used to clean the std input
+		std::getline(std::cin, CIN_CLEANER);
 		if (opc == 'D' || opc == 'd') {
 			if (Map[row][col] == 'M') {
 				this->GameOver();
@@ -264,7 +267,7 @@ GameClass::~GameClass()
 {
 }
 
-void GameClass::GameOver()
+void GameClass::GameOver()  //Show the defeat screan
 {
 	std::cout << "    BOOOMMM!!!!" << std::endl;
 	std::cout << "BOOOMMM!!!!" << std::endl;
