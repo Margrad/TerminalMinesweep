@@ -25,9 +25,9 @@ private:
 	int32 Higth=3, Wide=3;	// Size of level map
 	bool CanPlay = false;	// Checks if RunGame() can be used
 	void GameOver();		// Game Over message for when the palyer hits a mine
-	void AutoDig(int, int);	// TODO auto removes empty plots when the player hits a empty plot of land
+	void AutoDig(int, int);		// Auto removes empty plots when the player hits a plot of land with no surrounding mines
 	bool IsGameEnd();		// Checks if the game ends in vitory
-	std::vector<FTEXT> Map;			// 'M' = mine; ' ' = nothing; n = number of surronding
+	void GameWin();			// Game Victory message
+	std::vector<FTEXT> Map;		// 'M' = mine; ' ' = nothing; n = number of surronding
 	std::vector<FTEXT> VisibleMap;	// n = number of surronding mines; M = Suspected mine;
 };
-
