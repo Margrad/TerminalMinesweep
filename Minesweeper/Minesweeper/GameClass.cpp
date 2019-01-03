@@ -196,7 +196,7 @@ void GameClass::RunGame()
 	this->PrintMap();
 	int32 row = -1, col = -1;
 	char opc = ' ';
-	std::cout << "Insert D to dig and M to mark a position." << std::endl;
+	std::cout << "Insert D to dig and M to mark a position. Or Q to abandon this match." << std::endl;
 	std::cout << "Insert the value of row and col you want to dig or Mark: " << std::endl;
 	while (1) {
 		do {
@@ -204,7 +204,11 @@ void GameClass::RunGame()
 			std::cin >> opc;
 		} while (opc != 'M' && opc != 'D' && opc != 'm' && opc != 'd' && opc != 'q' && opc != 'Q');
 
-		if (opc == 'q' || opc == 'Q') break;
+		if (opc == 'q' || opc == 'Q') {
+			FTEXT CIN_CLEANER; // used to clean the std input
+			std::getline(std::cin, CIN_CLEANER);
+			break;
+		}
 		while (row < 0 || row >= this->Wide) {
 			std::cout << "Row: ";
 			std::cin >> row;
@@ -216,6 +220,12 @@ void GameClass::RunGame()
 		FTEXT CIN_CLEANER; // used to clean the std input
 		std::getline(std::cin, CIN_CLEANER);
 		if (opc == 'D' || opc == 'd') {
+			if (this->VisibleMap[row][col] == 'M') {
+				std::cout << "You are digging where you marked as a mine, are you sure you want to dig here?(n to Not dig here)"<<std::endl;
+				FTEXT answer = "";
+				std::getline(std::cin, answer);
+				if (answer[0] == 'n' or answer[0] == 'N') continue;
+			}
 			if (Map[row][col] == 'M') {
 				this->GameOver();
 				break;
