@@ -14,10 +14,10 @@ GameClass::GameClass()
 void GameClass::SetNumberOfMines()
 {
 	int32 val;
-	std::cout << "How Many Mines should the Map have?(Positive and smaller than "<< this->Higth*this->Wide << ")." << std::endl;
+	std::cout << "How Many Mines should the Map have?(Positive and smaller than " << this->Higth*this->Wide << ")." << std::endl;
 	do {
 		std::cin >> val;
-	} while (val > this->Higth*this->Wide || val <=0);
+	} while (val > this->Higth*this->Wide || val <= 0);
 	this->NumberOfMines = val;
 }
 
@@ -64,8 +64,8 @@ void GameClass::MakeMap()
 	}
 	// Start Counting the number of mines in the surrounding area
 	// Counting the mines in the center of the map
-	for (int32 i = 1; i < this->Higth-1; i++) {
-		for (int32 j = 1; j < this->Wide-1; j++) {
+	for (int32 i = 1; i < this->Higth - 1; i++) {
+		for (int32 j = 1; j < this->Wide - 1; j++) {
 			if (this->Map[i][j] == ' ') {
 				int32 val = 0;
 				for (int32 k = i - 1; k <= i + 1; k++) {
@@ -126,14 +126,14 @@ void GameClass::MakeMap()
 		if (this->Map[1][1] == 'M') val++;
 		this->Map[0][0] = val + '0';
 	}
-	if (this->Map[0][this->Wide-1] == ' ') {
+	if (this->Map[0][this->Wide - 1] == ' ') {
 		int32 val = 0;
 		if (this->Map[1][this->Wide - 1] == 'M') val++;
 		if (this->Map[0][this->Wide - 2] == 'M') val++;
 		if (this->Map[1][this->Wide - 2] == 'M') val++;
 		this->Map[0][this->Wide - 1] = val + '0';
 	}
-	if (this->Map[this->Higth-1][this->Wide - 1] == ' ') {
+	if (this->Map[this->Higth - 1][this->Wide - 1] == ' ') {
 		int32 val = 0;
 		if (this->Map[this->Higth - 2][this->Wide - 1] == 'M') val++;
 		if (this->Map[this->Higth - 1][this->Wide - 2] == 'M') val++;
@@ -173,10 +173,10 @@ void GameClass::PrintMap()
 			std::cout << row_number++;
 		}
 		for (auto val : row) {
-			std::cout<< "|" <<val;
+			std::cout << "|" << val;
 		}
 		std::cout << "|\n  ";
-		for (int32 i = 0; i < this->Wide * 2+1; i++) {
+		for (int32 i = 0; i < this->Wide * 2 + 1; i++) {
 			std::cout << "=";
 		}
 		std::cout << "\n";
@@ -189,27 +189,27 @@ void GameClass::PrintMap()
 
 void GameClass::RunGame()
 {
-	if (!this->CanPlay){
+	if (!this->CanPlay) {
 		std::cout << "Please make sure you run \"this.MakeMap()\" before \"this.RunGame\"" << std::endl;
 		return;
 	}
 	this->PrintMap();
 	int32 row = -1, col = -1;
-	char opc=' ';
+	char opc = ' ';
 	std::cout << "Insert D to dig and M to mark a position." << std::endl;
 	std::cout << "Insert the value of row and col you want to dig or Mark: " << std::endl;
 	while (1) {
 		do {
 			std::cout << "Option: ";
 			std::cin >> opc;
-		}while (opc != 'M' && opc != 'D' && opc != 'm' && opc != 'd' && opc != 'q' && opc != 'Q');
+		} while (opc != 'M' && opc != 'D' && opc != 'm' && opc != 'd' && opc != 'q' && opc != 'Q');
 
 		if (opc == 'q' || opc == 'Q') break;
 		while (row < 0 || row >= this->Wide) {
 			std::cout << "Row: ";
 			std::cin >> row;
 		}
-		while(col < 0 || col >= this->Higth){
+		while (col < 0 || col >= this->Higth) {
 			std::cout << "Column: ";
 			std::cin >> col;
 		}
@@ -220,10 +220,9 @@ void GameClass::RunGame()
 				this->GameOver();
 				break;
 			}
-			else if(Map[row][col] == ' '){
+			else if (this->VisibleMap[row][col] == ' ') {
 				AutoDig(row, col);
 			}
-			this->VisibleMap[row][col] = Map[row][col];
 		}
 		if (opc == 'M' || opc == 'm') {
 			this->VisibleMap[row][col] = 'M';
@@ -253,13 +252,26 @@ bool GameClass::IsGameEnd()
 	}
 	this->MarkedMines = MinesMarked;
 	if (MapFillness == this->Higth*this->Wide && MinesMarked == this->NumberOfMines) {
-		std::cout << "Nicely done!!!" << std::endl;
+		GameWin();
 		return true;
 	}
 	if (MinesMarked > this->NumberOfMines) {
 		std::cout << "Too many Marked mines on the map!" << std::endl;
 	}
 	return false;
+}
+
+void GameClass::GameWin()
+{
+	std::cout << "wWWwwwWWwWWWWwwwWWw" << std::endl;
+	std::cout << "WWwwwwWwwWWwWwwwwwW" << std::endl;
+	std::cout << "WWwwwww\\/WWwwWWWww" << std::endl;
+	std::cout << "  #=============#" << std::endl;
+	std::cout << "  |   YOU WON   |" << std::endl;
+	std::cout << "  #=============#" << std::endl;
+	std::cout << "W And vegetagions w" << std::endl;
+	std::cout << "wWwW recovers WwwWw" << std::endl;
+	std::cout << "wwwwwwwwwwwwwwwwwww" << std::endl;
 }
 
 
@@ -283,4 +295,66 @@ void GameClass::GameOver()  //Show the defeat screan
 void GameClass::AutoDig(int row, int col)
 {
 	
+	this->VisibleMap[row][col] = this->Map[row][col];
+	int32 new_row=row,new_col=col;
+
+	if (this->VisibleMap[row][col] == '0') {
+		if (row != 0 && col != 0) { // Check the top left corner 
+			new_row = row - 1;
+			new_col = col - 1;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if (row != 0 && col != (this->Wide - 1)) { // Check the top rigth corner 
+			new_row = row - 1;
+			new_col = col + 1;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if (row != (this->Higth - 1) && col != (this->Wide - 1)) { // Check the bottom rigth corner 
+			new_row = row + 1;
+			new_col = col + 1;
+			if (VisibleMap[new_row][new_col] != Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if (row != (this->Higth - 1) && col != 0) { // Check the bottom left corner 
+			new_row = row + 1;
+			new_col = col - 1;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+
+		if (row != 0) { // Check the top center corner 
+			new_row = row - 1;
+			new_col = col;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if (row != (this->Wide-1)) { // Check the bottom center corner 
+			new_row = row + 1;
+			new_col = col;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if ( col != 0) { // Check the center left corner 
+			new_row = row;
+			new_col = col - 1;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+		if (col != (this->Wide - 1)) { // Check the center rigth corner 
+			new_row = row;
+			new_col = col + 1;
+			if (this->VisibleMap[new_row][new_col] != this->Map[new_row][new_col]) {
+				AutoDig(new_row, new_col);
+			}
+		}
+	}
 }
