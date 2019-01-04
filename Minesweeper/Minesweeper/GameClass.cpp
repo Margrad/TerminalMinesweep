@@ -11,6 +11,20 @@ GameClass::GameClass()
 {
 }
 
+void GameClass::Intro()
+{
+	std::cout << " +++++++++++++++++++++++\n";
+	std::cout << " +++++++++++++++++++++++\n";
+	std::cout << " ++++> Welcome to <+++++\n";
+	std::cout << " +---------------------+\n";
+	std::cout << " | Minesweep like game |\n";
+	std::cout << " |  created as an non  |\n";
+	std::cout << " | comercial exercise. |\n";
+	std::cout << " +---------------------+\n";
+	std::cout << " +++++++++++++++++++++++\n";
+	std::cout << " +++++++++++++++++++++++\n\n";
+}
+
 void GameClass::SetNumberOfMines()
 {
 	int32 val;
@@ -276,9 +290,9 @@ void GameClass::GameWin()
 	std::cout << "wWWwwwWWwWWWWwwwWWw" << std::endl;
 	std::cout << "WWwwwwWwwWWwWwwwwwW" << std::endl;
 	std::cout << "WWwwwww\\/WWwwWWWww" << std::endl;
-	std::cout << "  #=============#" << std::endl;
-	std::cout << "  |   YOU WON   |" << std::endl;
-	std::cout << "  #=============#" << std::endl;
+	std::cout << "W #=============# w" << std::endl;
+	std::cout << "w |   YOU WON   | W" << std::endl;
+	std::cout << "w #=============# w" << std::endl;
 	std::cout << "W And vegetagions w" << std::endl;
 	std::cout << "wWwW recovers WwwWw" << std::endl;
 	std::cout << "wwwwwwwwwwwwwwwwwww" << std::endl;
@@ -294,9 +308,9 @@ void GameClass::GameOver()  //Show the defeat screan
 	std::cout << "    BOOOMMM!!!!" << std::endl;
 	std::cout << "BOOOMMM!!!!" << std::endl;
 	std::cout << "          BOOOMMM!!!!\n" << std::endl;
-	std::cout << "#=============#" << std::endl;
-	std::cout << "|  GAME OVER  |" << std::endl;
-	std::cout << "#=============#" << std::endl;
+	std::cout << " #=============#" << std::endl;
+	std::cout << " |  GAME OVER  |" << std::endl;
+	std::cout << " #=============#" << std::endl;
 	std::cout << "     BOOOMMM!!!!" << std::endl;
 	std::cout << "BOOOMMM!!!!" << std::endl;
 	std::cout << "          BOOOMMM!!!!\n" << std::endl;

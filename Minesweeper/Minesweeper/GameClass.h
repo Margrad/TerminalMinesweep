@@ -13,6 +13,7 @@ class GameClass
 {
 public:
 	GameClass();
+	void Intro();			// A bit of Ascii art to start the game
 	void SetNumberOfMines();// Ask the player for the number of mines in this level
 	void SetMapSize();		// Ask the player for the size of the map
 	void MakeMap();			// Sets the map after the use of the 2 previows functions

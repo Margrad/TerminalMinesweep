@@ -10,6 +10,7 @@ int main() {
 	FTEXT answer = "n";
     while(1){
 	GameClass ThisGame;
+	ThisGame.Intro();
 	ThisGame.SetMapSize();
 	ThisGame.SetNumberOfMines();
 	ThisGame.MakeMap();
@@ -20,7 +21,6 @@ int main() {
     if(answer[0] == 'y' || answer[0] == 'Y') continue;
 	break;
     }
-	system("PAUSE");
 
 	return 0;
 }
